@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student ID & Password Searcher · 3rd Sem</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #5f4bb6, #7b64e5);
+      margin: 0;
+      padding: 20px 10px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 22px;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: 0 12px 30px rgb(0 0 0 / 0.25);
+    }
+    h1 {
+      font-size: 24px;
+      margin: 0 0 6px 0;
+      color: #1e1e2f;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #4a4a6a;
+      margin-bottom: 22px;
+      font-weight: 500;
+      border-left: 4px solid #7b64e5;
+      padding-left: 12px;
+      background: #f5f3ff;
+      border-radius: 0 8px 8px 0;
+      line-height: 1.4;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      margin-top: 16px;
+      color: #2d2d44;
+      font-size: 14px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 15px;
+      border: 1.8px solid #ddd;
+      border-radius: 10px;
+      box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fcfcfd;
+    }
+    input[type="text"]:focus {
+      border-color: #7b64e5;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(123, 100, 229, 0.2);
+      background: #fff;
+    }
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 22px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      color: #fff;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+    #searchBtn {
+      background: linear-gradient(90deg, #5e79ec, #945ee3);
+      box-shadow: 0 4px 10px rgba(94, 121, 236, 0.4);
+    }
+    #searchBtn:hover {
+      background: linear-gradient(90deg, #445fd8, #7038d1);
+      transform: scale(1.01);
+    }
+    #showAllBtn {
+      background: #3198ff;
+      box-shadow: 0 4px 10px rgba(49, 152, 255, 0.3);
+      margin-top: 12px;
+    }
+    #showAllBtn:hover {
+      background: #1e75e0;
+      transform: scale(1.01);
+    }
+    .result {
+      margin-top: 28px;
+      border: 1px solid #e0e0f0;
+      border-radius: 14px;
+      padding: 18px 18px 12px;
+      background: #fbfaff;
+      box-shadow: 0 6px 14px rgb(0 0 0 / 0.04);
+      transition: all 0.2s;
+    }
+    .result-header {
+      background: linear-gradient(90deg, #6b63e6, #9a66de);
+      padding: 8px 14px;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 24px;
+      display: inline-block;
+      margin-bottom: 14px;
+      font-size: 15px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 6px rgba(107, 99, 230, 0.3);
+    }
+    .label-set {
+      margin-bottom: 14px;
+      border-bottom: 1px dashed #e2e2f0;
+      padding-bottom: 10px;
+    }
+    .label-set:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    .label-set span {
+      display: block;
+      font-weight: 600;
+      color: #6f6f8c;
+      margin-bottom: 4px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .label-set p {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e1e2f;
+      word-break: break-word;
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #eeeef8;
+    }
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(20, 10, 40, 0.6);
+      backdrop-filter: blur(3px);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    #modal.active {
+      display: flex;
+    }
+    #modal-content {
+      background: white;
+      padding: 22px 22px 18px;
+      border-radius: 20px;
+      max-height: 80vh;
+      width: 100%;
+      max-width: 500px;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid #eae6ff;
+    }
+    #modal-content h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      color: #2d2d44;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #modal-content ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+      max-height: 50vh;
+      overflow-y: auto;
+      border: 1px solid #f0f0f8;
+      border-radius: 12px;
+    }
+    #modal-content li {
+      padding: 11px 15px;
+      border-bottom: 1px solid #f0f0f8;
+      font-weight: 500;
+      color: #2a2a3c;
+      font-size: 14px;
+      display: flex;
+      gap: 6px;
+    }
+    #modal-content li:last-child {
+      border-bottom: none;
+    }
+    #modal-content li strong {
+      font-weight: 700;
+      color: #5a4ac0;
+      min-width: 90px;
+    }
+    #modal-close {
+      background: #e24343;
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 18px;
+      font-size: 15px;
+      transition: background 0.2s;
+      width: auto;
+      box-shadow: 0 4px 10px rgba(226, 67, 67, 0.3);
+      float: right;
+    }
+    #modal-close:hover {
+      background: #c42e2e;
+    }
+    .clearfix::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    .badge {
+      background: #eae6ff;
+      color: #4b3b9b;
+      padding: 4px 10px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🔐 Student Credentials</h1>
+  <div class="subtitle">Search by GR number (1001 – 1100) · Section 1‑A & 1-B</div>
+
+  <label for="grInput">GR Number (e.g., 1001, 1050, 1100)</label>
+  <input type="text" id="grInput" placeholder="Enter GR number" autocomplete="off" />
+
+  <label for="nameFilter">Student Name (optional filter)</label>
+  <input type="text" id="nameFilter" placeholder="Type name to narrow (optional)" autocomplete="off" />
+
+  <button id="searchBtn">🔍 Search by GR</button>
+  <button id="showAllBtn">📋 Show All Students (1‑A & 1-B)</button>
+
+  <div id="result" class="result" style="display: none;"></div>
+</div>
+
+<!-- Modal for full list -->
+<div id="modal">
+  <div id="modal-content" class="clearfix">
+    <h2>📘 All Students · Section 1‑A & 1-B<span class="badge">GR 1001–1100</span></h2>
+    <ul id="studentsList"></ul>
+    <button id="modal-close">Close</button>
+  </div>
+</div>
+
+<script>
+  // ------------------------------------------------------------
+  // FULL STUDENT DATASET — extracted from msids.xlsx (Sheet: 1-A)
+  // All students from row 2 to last (excluding empty rows)
+  // We map GRNO from the username sequence: 1001 → 1100
+  // Username format: AIT-261-110-XXXX@ALIGARH.EDU.PK
+  // ------------------------------------------------------------
+  const studentsData = [
+    { displayName: "RAJA KULLRANG", username: "AIT-261-110-1001@ALIGARH.EDU.PK", newPassword: "Raja+1001", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD BILAL", username: "AIT-261-110-1002@ALIGARH.EDU.PK", newPassword: "Bilal+1002", license: "Office 365 A1 for students" },
+    { displayName: "UMER SALMAN KHAN", username: "AIT-261-110-1003@ALIGARH.EDU.PK", newPassword: "Umer+1003", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD HASSAN", username: "AIT-261-110-1004@ALIGARH.EDU.PK", newPassword: "Mhassan+1004", license: "Office 365 A1 for students" },
+    { displayName: "SYED GHAZI HASAN", username: "AIT-261-110-1005@ALIGARH.EDU.PK", newPassword: "SmaazAR+1005", license: "Office 365 A1 for students" },
+    { displayName: "SYED MAAZ ABDUR REHMAN", username: "AIT-261-110-1006@ALIGARH.EDU.PK", newPassword: "MaazAR+1006", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD HASEEB", username: "AIT-261-110-1007@ALIGARH.EDU.PK", newPassword: "Mhaseeb+1007", license: "Office 365 A1 for students" },
+    { displayName: "SHAFFAN HASSAN KHAN", username: "AIT-261-110-1008@ALIGARH.EDU.PK", newPassword: "Shaffan+1008", license: "Office 365 A1 for students" },
+    { displayName: "SHEHRYAR HUSSAIN ARIF", username: "AIT-261-110-1009@ALIGARH.EDU.PK", newPassword: "ShussanA+1009", license: "Office 365 A1 for students" },
+    { displayName: "SYED MUHAMMAD NAQI", username: "AIT-261-110-1010@ALIGARH.EDU.PK", newPassword: "Smuhammad+1010", license: "Office 365 A1 for students" },
+    { displayName: "DANIYAL REHMAN", username: "AIT-261-110-1011@ALIGARH.EDU.PK", newPassword: "Daniyal+1011", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD SADIQ BALKHI", username: "AIT-261-110-1012@ALIGARH.EDU.PK", newPassword: "saqibB+1012", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD MUSTAFA SHAHBAZ", username: "AIT-261-110-1013@ALIGARH.EDU.PK", newPassword: "mustafa+1013", license: "Office 365 A1 for students" },
+    { displayName: "SYED HASSAN NEZAMI", username: "AIT-261-110-1014@ALIGARH.EDU.PK", newPassword: "Nezami+1014", license: "Office 365 A1 for students" },
+    { displayName: "SYED SHIRAZ ALI", username: "AIT-261-110-1015@ALIGARH.EDU.PK", newPassword: "Shiraz+1015", license: "Office 365 A1 for students" },
+    { displayName: "AHMED ALI", username: "AIT-261-110-1016@ALIGARH.EDU.PK", newPassword: "Ahmed+1016", license: "Office 365 A1 for students" },
+    { displayName: "SYED MUHIB AZHAR", username: "AIT-261-110-1017@ALIGARH.EDU.PK", newPassword: "Muhib+1017", license: "Office 365 A1 for students" },
+    { displayName: "ABDUL REHMAN", username: "AIT-261-110-1018@ALIGARH.EDU.PK", newPassword: "Arehman+1018", license: "Office 365 A1 for students" },
+    { displayName: "SYEDA MARIUM NAJMI", username: "AIT-261-110-1019@ALIGARH.EDU.PK", newPassword: "Smariyam+1019", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD MUSTAFA KHAN", username: "AIT-261-110-1020@ALIGARH.EDU.PK", newPassword: "mustafa+1020", license: "Office 365 A1 for students" },
+    { displayName: "MISHKA ALI", username: "AIT-261-110-1021@ALIGARH.EDU.PK", newPassword: "Mishka+1021", license: "Office 365 A1 for students" },
+    { displayName: "ABDUL BASIT", username: "AIT-261-110-1022@ALIGARH.EDU.PK", newPassword: "Basit+1022", license: "Office 365 A1 for students" },
+    { displayName: "LAIBA FATIMA", username: "AIT-261-110-1023@ALIGARH.EDU.PK", newPassword: "laiba+1023", license: "Office 365 A1 for students" },
+    { displayName: "ABDUL MOIZ", username: "AIT-261-110-1024@ALIGARH.EDU.PK", newPassword: "Amoiz+1024", license: "Office 365 A1 for students" },
+    { displayName: "MUSAB AHMED KHAN", username: "AIT-261-110-1026@ALIGARH.EDU.PK", newPassword: "Mahmed+1025", license: "Office 365 A1 for students" },
+    { displayName: "ARHAM SALMAN", username: "AIT-261-110-1027@ALIGARH.EDU.PK", newPassword: "ArhamS+1026", license: "Office 365 A1 for students" },
+    { displayName: "SHAHZAIN MAILK", username: "AIT-261-110-1028@ALIGARH.EDU.PK", newPassword: "Sahazain+1028", license: "Office 365 A1 for students" },
+    { displayName: "HAFIZ MAHASIN KALEEM BARI", username: "AIT-261-110-1029@ALIGARH.EDU.PK", newPassword: "Mahasin+1029", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD YAWER KHAN", username: "AIT-261-110-1030@ALIGARH.EDU.PK", newPassword: "Yawar+1030", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD ALI MALICK", username: "AIT-261-110-1031@ALIGARH.EDU.PK", newPassword: "Ali+1031", license: "Office 365 A1 for students" },
+    { displayName: "ADAN ALI", username: "AIT-261-110-1032@ALIGARH.EDU.PK", newPassword: "Adnanali+1032", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD AYAN", username: "AIT-261-110-1033@ALIGARH.EDU.PK", newPassword: "mAyan+1033", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD FARMAN", username: "AIT-261-110-1034@ALIGARH.EDU.PK", newPassword: "M.Farman+1034", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD TAHA", username: "AIT-261-110-1035@ALIGARH.EDU.PK", newPassword: "muhammadTaha+1035", license: "Office 365 A1 for students" },
+    { displayName: "ALI MAVIA", username: "AIT-261-110-1036@ALIGARH.EDU.PK", newPassword: "aliMavia+1036", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD HAMZA", username: "AIT-261-110-1037@ALIGARH.EDU.PK", newPassword: "Mhamza+1037", license: "Office 365 A1 for students" },
+    { displayName: "ZAREEN", username: "AIT-261-110-1038@ALIGARH.EDU.PK", newPassword: "Zareen+1038", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD HASSAN", username: "AIT-261-110-1039@ALIGARH.EDU.PK", newPassword: "Mhassan+1039", license: "Office 365 A1 for students" },
+    { displayName: "LAIBA LATIF", username: "AIT-261-110-1040@ALIGARH.EDU.PK", newPassword: "laibaLatif+1040", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD ZAMEER AWAN", username: "AIT-261-110-1041@ALIGARH.EDU.PK", newPassword: "MZameerA+1041", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD ANAS", username: "AIT-261-110-1042@ALIGARH.EDU.PK", newPassword: "Muhammadanas+1042", license: "Office 365 A1 for students" },
+    { displayName: "ABDUL AHAD", username: "AIT-261-110-1043@ALIGARH.EDU.PK", newPassword: "abdulAhad+1043", license: "Office 365 A1 for students" },
+    { displayName: "NABEEL UDDIN", username: "AIT-261-110-1044@ALIGARH.EDU.PK", newPassword: "Nabeeluddin+1044", license: "Office 365 A1 for students" },
+    { displayName: "HUNAIN RAZA", username: "AIT-261-110-1045@ALIGARH.EDU.PK", newPassword: "hunainRaza+1045", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD ZAID", username: "AIT-261-110-1046@ALIGARH.EDU.PK", newPassword: "muhammadZaid+1046", license: "Office 365 A1 for students" },
+    { displayName: "WASE AHMED", username: "AIT-261-110-1047@ALIGARH.EDU.PK", newPassword: "WaseAhmed+1047", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD ASHAR", username: "AIT-261-110-1048@ALIGARH.EDU.PK", newPassword: "MuhammadAshar+1048", license: "Office 365 A1 for students" },
+    { displayName: "ABDULLAH REHAN", username: "AIT-261-110-1049@ALIGARH.EDU.PK", newPassword: "AddullahRehan+1049", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD USMAN", username: "AIT-261-110-1050@ALIGARH.EDU.PK", newPassword: "Musman+1050", license: "Office 365 A1 for students" },
+    { displayName: "AHTISHAM ULL HAQ UL HAQ", username: "AIT-261-110-1051@ALIGARH.EDU.PK", newPassword: "ahtisham+1051", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD HAMMAD", username: "AIT-261-110-1052@ALIGARH.EDU.PK", newPassword: "hammad+1052", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD FAWAZ HAFEEZ", username: "AIT-261-110-1053@ALIGARH.EDU.PK", newPassword: "fawaz+1053", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD FARIZ", username: "AIT-261-110-1054@ALIGARH.EDU.PK", newPassword: "fariz+1054", license: "Office 365 A1 for students" },
+    { displayName: "SYED MUHAMMAD SAAD HASSAN", username: "AIT-261-110-1077@ALIGARH.EDU.PK", newPassword: "saad+1077", license: "Office 365 A1 for students" },
+    { displayName: "GHASIF", username: "AIT-261-110-1094@ALIGARH.EDU.PK", newPassword: "ghasif+1094", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD MAAZ", username: "AIT-261-110-1101@ALIGARH.EDU.PK", newPassword: "maaz+1101", license: "Office 365 A1 for students" },
+    { displayName: "ARMAN HUSSAIN", username: "AIT-261-110-1102@ALIGARH.EDU.PK", newPassword: "hussain+1102", license: "Office 365 A1 for students" },
+    // Second block (rows after empty row) — still part of 1-A
+    { displayName: "MUHAMMAD MEKAEEL", username: "AIT-261-110-1025@ALIGARH.EDU.PK", newPassword: "mekaeel+1025", license: "Office 365 A1 for students" },
+    { displayName: "ALI HAIDER", username: "AIT-261-110-1055@ALIGARH.EDU.PK", newPassword: "ali+1055", license: "Office 365 A1 for students" },
+    { displayName: "RASHID MERAJ", username: "AIT-261-110-1056@ALIGARH.EDU.PK", newPassword: "rashid+1056", license: "Office 365 A1 for students" },
+    { displayName: "HASSAN ARIB", username: "AIT-261-110-1057@ALIGARH.EDU.PK", newPassword: "hassan+1057", license: "Office 365 A1 for students" },
+    { displayName: "TANVEER UL HASAN", username: "AIT-261-110-1058@ALIGARH.EDU.PK", newPassword: "tanveer+1058", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD HASNAIN KHAN", username: "AIT-261-110-1059@ALIGARH.EDU.PK", newPassword: "hasnain+1059", license: "Office 365 A1 for students" },
+    { displayName: "MUSKAN ZAKIR", username: "AIT-261-110-1060@ALIGARH.EDU.PK", newPassword: "muskan+1060", license: "Office 365 A1 for students" },
+    { displayName: "FATIMA ZAKIR", username: "AIT-261-110-1061@ALIGARH.EDU.PK", newPassword: "fatima+1061", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD HARIS", username: "AIT-261-110-1062@ALIGARH.EDU.PK", newPassword: "haris+1062", license: "Office 365 A1 for students" },
+    { displayName: "WALIHA FATIMA", username: "AIT-261-110-1063@ALIGARH.EDU.PK", newPassword: "waliha+1063", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD MURTAZA KAMRAN", username: "AIT-261-110-1064@ALIGARH.EDU.PK", newPassword: "murtaza+1064", license: "Office 365 A1 for students" },
+    { displayName: "OMAIMA REHMAN", username: "AIT-261-110-1065@ALIGARH.EDU.PK", newPassword: "omaima+1065", license: "Office 365 A1 for students" },
+    { displayName: "ABDUL WAHID", username: "AIT-261-110-1066@ALIGARH.EDU.PK", newPassword: "wahid+1066", license: "Office 365 A1 for students" },
+    { displayName: "TAHA AHMED SADDIQUI", username: "AIT-261-110-1067@ALIGARH.EDU.PK", newPassword: "ahmed+1067", license: "Office 365 A1 for students" },
+    { displayName: "ZAINAB AZFAR", username: "AIT-261-110-1068@ALIGARH.EDU.PK", newPassword: "zainab+1068", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD AMMAR FAYYAZ", username: "AIT-261-110-1069@ALIGARH.EDU.PK", newPassword: "ammar+1069", license: "Office 365 A1 for students" },
+    { displayName: "MOOSA ALI", username: "AIT-261-110-1070@ALIGARH.EDU.PK", newPassword: "moosa+1070", license: "Office 365 A1 for students" },
+    { displayName: "HASEEB AHMED", username: "AIT-261-110-1071@ALIGARH.EDU.PK", newPassword: "haseeb+1071", license: "Office 365 A1 for students" },
+    { displayName: "HABIB AHMED", username: "AIT-261-110-1072@ALIGARH.EDU.PK", newPassword: "habib+1072", license: "Office 365 A1 for students" },
+    { displayName: "ZAID HASAN", username: "AIT-261-110-1073@ALIGARH.EDU.PK", newPassword: "hasan+1073", license: "Office 365 A1 for students" },
+    { displayName: "UMM E AMNA", username: "AIT-261-110-1074@ALIGARH.EDU.PK", newPassword: "amna+1074", license: "Office 365 A1 for students" },
+    { displayName: "ABDUL MOIZ", username: "AIT-261-110-1075@ALIGARH.EDU.PK", newPassword: "abdul+1075", license: "Office 365 A1 for students" },
+    { displayName: "SAYAM AHMED", username: "AIT-261-110-1076@ALIGARH.EDU.PK", newPassword: "sayam+1076", license: "Office 365 A1 for students" },
+    { displayName: "SYED ABDUL MUIEZ ALI", username: "AIT-261-110-1078@ALIGARH.EDU.PK", newPassword: "muiez+1078", license: "Office 365 A1 for students" },
+    { displayName: "NABEEL AHMED AHMED", username: "AIT-261-110-1079@ALIGARH.EDU.PK", newPassword: "ahmed+1079", license: "Office 365 A1 for students" },
+    { displayName: "HAIDER ABBAS", username: "AIT-261-110-1080@ALIGARH.EDU.PK", newPassword: "haider+1080", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD HASHIR", username: "AIT-261-110-1081@ALIGARH.EDU.PK", newPassword: "muhammad+1081", license: "Office 365 A1 for students" },
+    { displayName: "TAYYABA WASEEM", username: "AIT-261-110-1082@ALIGARH.EDU.PK", newPassword: "tayyaba+1082", license: "Office 365 A1 for students" },
+    { displayName: "SYED HASSAN ABBAS RIZVI", username: "AIT-261-110-1083@ALIGARH.EDU.PK", newPassword: "abbas+1083", license: "Office 365 A1 for students" },
+    { displayName: "SYEDA RIDA BATOOL NAQVI", username: "AIT-261-110-1084@ALIGARH.EDU.PK", newPassword: "batool+1084", license: "Office 365 A1 for students" },
+    { displayName: "SYED AUSAJA MEHDI", username: "AIT-261-110-1085@ALIGARH.EDU.PK", newPassword: "ausaja+1085", license: "Office 365 A1 for students" },
+    { displayName: "ARHAM NADEEM", username: "AIT-261-110-1086@ALIGARH.EDU.PK", newPassword: "arham+1086", license: "Office 365 A1 for students" },
+    { displayName: "ZAID TAJ", username: "AIT-261-110-1087@ALIGARH.EDU.PK", newPassword: "zaid+1087", license: "Office 365 A1 for students" },
+    { displayName: "RAYAN", username: "AIT-261-110-1088@ALIGARH.EDU.PK", newPassword: "rayan+1088", license: "Office 365 A1 for students" },
+    { displayName: "HAREEM AZAM", username: "AIT-261-110-1089@ALIGARH.EDU.PK", newPassword: "hareem+1089", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD ISMAIL", username: "AIT-261-110-1090@ALIGARH.EDU.PK", newPassword: "muhammad+1090", license: "Office 365 A1 for students" },
+    { displayName: "ROSHAN ZAMEER", username: "AIT-261-110-1091@ALIGARH.EDU.PK", newPassword: "roshan+1091", license: "Office 365 A1 for students" },
+    { displayName: "KASHAN ALI", username: "AIT-261-110-1092@ALIGARH.EDU.PK", newPassword: "kashan+1092", license: "Office 365 A1 for students" },
+    { displayName: "ALISHBA FAIMA", username: "AIT-261-110-1093@ALIGARH.EDU.PK", newPassword: "alishba+1093", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD ZAIN", username: "AIT-261-110-1095@ALIGARH.EDU.PK", newPassword: "muhammad+1095", license: "Office 365 A1 for students" },
+    { displayName: "ABDULLAH", username: "AIT-261-110-1096@ALIGARH.EDU.PK", newPassword: "abdullah+1096", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD IZHAN RANA", username: "AIT-261-110-1097@ALIGARH.EDU.PK", newPassword: "izhan+1097", license: "Office 365 A1 for students" },
+    { displayName: "ABDUL QADEER", username: "AIT-261-110-1098@ALIGARH.EDU.PK", newPassword: "abdul+1098", license: "Office 365 A1 for students" },
+    { displayName: "IYQAAN ABBAS KAZMI", username: "AIT-261-110-1099@ALIGARH.EDU.PK", newPassword: "abbas+1099", license: "Office 365 A1 for students" },
+    { displayName: "MUHAMMAD AHMED KHAN", username: "AIT-261-110-1100@ALIGARH.EDU.PK", newPassword: "ahmed+1100", license: "Office 365 A1 for students" }
+  ];
+
+  // Extract GR number (last 4 digits before @) from username
+  function extractGR(username) {
+    const match = username.match(/(\d{4})@/);
+    return match ? match[1] : null;
+  }
+
+  // Build a quick map GR -> student object
+  const grMap = new Map();
+  studentsData.forEach(student => {
+    const gr = extractGR(student.username);
+    if (gr) {
+      // If duplicate GR exists (e.g., 1025 appears twice? only one in final list), keep both but prefer later? We'll just store array? 
+      // For simplicity, store as is, but show first found. In our data there is duplicate GR 1025? Actually: first block has no 1025, second block has 1025 (Muhammad Mekaeel). Also 1101/1102 are beyond 1100 but we keep them.
+      // Also note duplicate display names but not GR duplicates (except 1025 appears once in extracted data? Let's check: row MUSAB AHMED KHAN username ends with 1026, not 1025. So 1025 only appears in second block for Muhammad Mekaeel. No conflict.)
+      // However we also have 1001-1100 range. Fine.
+      if (!grMap.has(gr)) {
+        grMap.set(gr, []);
+      }
+      grMap.get(gr).push(student);
+    }
+  });
+
+  // DOM elements
+  const grInput = document.getElementById("grInput");
+  const nameFilter = document.getElementById("nameFilter");
+  const searchBtn = document.getElementById("searchBtn");
+  const showAllBtn = document.getElementById("showAllBtn");
+  const resultDiv = document.getElementById("result");
+  const modal = document.getElementById("modal");
+  const studentsListUl = document.getElementById("studentsList");
+  const modalCloseBtn = document.getElementById("modal-close");
+
+  // ------- Search by GR (with optional name filter) -------
+  function performSearch() {
+    const rawGr = grInput.value.trim();
+    const filterName = nameFilter.value.trim().toUpperCase();
+
+    if (!rawGr) {
+      alert("Please enter a GR number (e.g., 1001)");
+      return;
+    }
+
+    // Normalize: if user enters 1001, extract digits; also allow "1001" or "GR1001"
+    const grMatch = rawGr.match(/\d{4}/);
+    if (!grMatch) {
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = `<p style="color:#d32f2f; font-weight:600; background:#ffebee; padding:12px; border-radius:10px;">❌ Invalid GR format. Please enter a 4-digit number (e.g., 1001).</p>`;
+      return;
+    }
+    const gr = grMatch[0];
+
+    const entries = grMap.get(gr);
+
+    if (!entries || entries.length === 0) {
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = `<p style="color:#d32f2f; font-weight:600; background:#ffebee; padding:12px; border-radius:10px;">🔍 No student found with GR ${gr}. Please check the number.</p>`;
+      return;
+    }
+
+    // Apply name filter if provided
+    let filtered = entries;
+    if (filterName) {
+      filtered = entries.filter(s => s.displayName.toUpperCase().includes(filterName));
+      if (filtered.length === 0) {
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = `<p style="color:#d32f2f; font-weight:600; background:#ffebee; padding:12px; border-radius:10px;">😕 No student with GR ${gr} matches name "${nameFilter.value.trim()}".</p>`;
+        return;
+      }
+    }
+
+    // Display the first match (or all matches; in our data GR is unique except maybe one, but we display first)
+    const student = filtered[0];
+    displayStudentInfo(student, gr);
+
+    // If multiple, show note
+    if (filtered.length > 1) {
+      resultDiv.innerHTML += `<p style="margin-top:10px; font-size:13px; color:#666; background:#f3f0ff; padding:8px; border-radius:8px;">⚠️ Multiple entries found for GR ${gr}. Showing first result.</p>`;
+    }
+  }
+
+  searchBtn.addEventListener("click", performSearch);
+  grInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") performSearch();
+  });
+  nameFilter.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") performSearch();
+  });
+
+  // ------- Display student info card -------
+  function displayStudentInfo(student, gr) {
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = `
+      <div class="result-header">GR No: ${gr} · ${student.displayName}</div>
+      <div class="label-set"><span>👤 Name</span><p>${student.displayName}</p></div>
+      <div class="label-set"><span>📧 Username</span><p style="font-weight:500; word-break:break-all;">${student.username}</p></div>
+      <div class="label-set"><span>🔑 New Password</span><p style="font-family: monospace; letter-spacing:0.5px;">${student.newPassword}</p></div>
+      <div class="label-set"><span>📄 License</span><p>${student.license}</p></div>
+    `;
+  }
+
+  // ------- Show All Students Modal (sorted by GR) -------
+  showAllBtn.addEventListener("click", () => {
+    // Build sorted list by GR
+    const allWithGR = studentsData.map(s => {
+      const gr = extractGR(s.username);
+      return { ...s, gr: gr || "----" };
+    }).sort((a, b) => {
+      // sort by GR numeric if possible
+      const ga = parseInt(a.gr, 10) || 9999;
+      const gb = parseInt(b.gr, 10) || 9999;
+      return ga - gb;
+    });
+
+    studentsListUl.innerHTML = "";
+    allWithGR.forEach(student => {
+      const li = document.createElement("li");
+      li.innerHTML = `<strong>GR ${student.gr}</strong> ${student.displayName} <span style="color:#5a4ac0; font-weight:500; margin-left:auto;">${student.newPassword}</span>`;
+      studentsListUl.appendChild(li);
+    });
+    modal.classList.add("active");
+  });
+
+  // Close modal
+  modalCloseBtn.addEventListener("click", () => {
+    modal.classList.remove("active");
+  });
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.classList.remove("active");
+  });
+
+  // Optional: clear result on input change
+  grInput.addEventListener("input", () => {
+    // not auto-hiding, but we can hide if needed
+  });
+
+  // Prefill demo? no.
+  // Add small hint: initial state.
+  window.addEventListener("load", () => {
+    // Optionally show quick hint if empty
+  });
+</script>
+</body>
+</html>
+```
