@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Student ID & Password Searcher · 3rd Sem</title>
+  <title>Student ID &amp; Password Searcher · 3rd Sem</title>
   <style>
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -255,7 +256,7 @@
 <div class="container">
   <h1>🔐 Student Credentials</h1>
   <div class="subtitle">
-    Search by GR: <strong>1001 – 1117</strong> (110 series) · <strong>D-1001 – D-1008</strong> (209 series)
+    Search by GR: <strong>1001 – 1134</strong> (110 series) · <strong>D-1001 – D-1008</strong> (209 series)
   </div>
 
   <label for="grInput">GR Number</label>
@@ -282,12 +283,12 @@
 
 <script>
   // ------------------------------------------------------------
-  // FULL STUDENT DATASET
-  // 110 series → plain GR (1001–1117)
+  // FULL STUDENT DATASET (from msids.xlsx — sheets 1-A & 1-B)
+  // 110 series → plain GR (1001–1134)
   // 209 series → GR prefixed with "D-" (D-1001 – D-1008)
   // ------------------------------------------------------------
   const studentsData = [
-    // ---------- 110 SERIES ----------
+    // ---------- 110 SERIES (Sheet 1-A) ----------
     { displayName: "RAJA KULLRANG", username: "AIT-261-110-1001@ALIGARH.EDU.PK", newPassword: "Raja+1001", license: "Office 365 A1 for students", series: "110" },
     { displayName: "MUHAMMAD BILAL", username: "AIT-261-110-1002@ALIGARH.EDU.PK", newPassword: "Bilal+1002", license: "Office 365 A1 for students", series: "110" },
     { displayName: "UMER SALMAN KHAN", username: "AIT-261-110-1003@ALIGARH.EDU.PK", newPassword: "Umer+1003", license: "Office 365 A1 for students", series: "110" },
@@ -345,6 +346,30 @@
     { displayName: "GHASIF", username: "AIT-261-110-1094@ALIGARH.EDU.PK", newPassword: "ghasif+1094", license: "Office 365 A1 for students", series: "110" },
     { displayName: "MUHAMMAD MAAZ", username: "AIT-261-110-1101@ALIGARH.EDU.PK", newPassword: "maaz+1101", license: "Office 365 A1 for students", series: "110" },
     { displayName: "ARMAN HUSSAIN", username: "AIT-261-110-1102@ALIGARH.EDU.PK", newPassword: "hussain+1102", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "MUHAMMAD FARZAN", username: "AIT-261-110-1112@ALIGARH.EDU.PK", newPassword: "FARZAN-AIT-1112", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "MUHAMMAD ZAEEM SIDDIQUI", username: "AIT-261-110-1113@ALIGARH.EDU.PK", newPassword: "ZAEEM-AIT-1113", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "MUHAMMAD IQRASH", username: "AIT-261-110-1114@ALIGARH.EDU.PK", newPassword: "IQRASH-AIT-1114", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "SYED MURTAZA HAIDER", username: "AIT-261-110-1115@ALIGARH.EDU.PK", newPassword: "MURTAZA-AIT-1115", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "SYED MUHAMMAD ABDULLAH", username: "AIT-261-110-1116@ALIGARH.EDU.PK", newPassword: "ABDULLAH-AIT-1116", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "SYED MUHAMMAD AHMED NOOR", username: "AIT-261-110-1117@ALIGARH.EDU.PK", newPassword: "AHMED-AIT-1117", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "MUHAMMAD HASNAIN", username: "AIT-261-110-1118@ALIGARH.EDU.PK", newPassword: "HASNAIN-AIT-1118", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "ABDUL SABOOR", username: "AIT-261-110-1119@ALIGARH.EDU.PK", newPassword: "SABOOR-AIT-1119", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "SYED JAZIL HUSSAIN RIZVI", username: "AIT-261-110-1120@ALIGARH.EDU.PK", newPassword: "JAZIL-AIT-1120", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "MUHAMMAD MUDASSIR", username: "AIT-261-110-1121@ALIGARH.EDU.PK", newPassword: "MUDASSIR-AIT-1121", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "MUSTAFA AHMED", username: "AIT-261-110-1122@ALIGARH.EDU.PK", newPassword: "MUSTAFA-AIT-1122", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "SYED ARHAM ALI", username: "AIT-261-110-1123@ALIGARH.EDU.PK", newPassword: "ARHAM-AIT-1123", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "ABDUL REHMAN KHAN", username: "AIT-261-110-1124@ALIGARH.EDU.PK", newPassword: "REHMAN-AIT-1124", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "OZAM SARWAR", username: "AIT-261-110-1125@ALIGARH.EDU.PK", newPassword: "OZAM-AIT-1125", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "MINSHA", username: "AIT-261-110-1126@ALIGARH.EDU.PK", newPassword: "ERMS+248", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "RAHIM", username: "AIT-261-110-1127@ALIGARH.EDU.PK", newPassword: "Rahim_1127=", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "AHMED RAZA", username: "AIT-261-110-1129@ALIGARH.EDU.PK", newPassword: "RAZA-AIT-1129", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "JABEEN HASSAN", username: "AIT-261-110-1130@ALIGARH.EDU.PK", newPassword: "Jabeen-AIT-1130", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "SYED HUZAIFA", username: "AIT-261-110-1131@ALIGARH.EDU.PK", newPassword: "SYED-AIT-1131", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "MARYAM", username: "AIT-261-110-1132@ALIGARH.EDU.PK", newPassword: "ERMS+135", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "MUHAMMAD HAMZA", username: "AIT-261-110-1133@ALIGARH.EDU.PK", newPassword: "hamZa-AIT-1133", license: "Office 365 A1 for students", series: "110" },
+    { displayName: "MUHAMMAD IZHAN ASIF", username: "AIT-261-110-1134@ALIGARH.EDU.PK", newPassword: "iZhan-1134-AIT", license: "Office 365 A1 for students", series: "110" },
+
+    // ---------- 110 SERIES (Sheet 1-B) ----------
     { displayName: "MUHAMMAD MEKAEEL", username: "AIT-261-110-1025@ALIGARH.EDU.PK", newPassword: "mekaeel+1025", license: "Office 365 A1 for students", series: "110" },
     { displayName: "ALI HAIDER", username: "AIT-261-110-1055@ALIGARH.EDU.PK", newPassword: "ali+1055", license: "Office 365 A1 for students", series: "110" },
     { displayName: "RASHID MERAJ", username: "AIT-261-110-1056@ALIGARH.EDU.PK", newPassword: "rashid+1056", license: "Office 365 A1 for students", series: "110" },
@@ -390,22 +415,6 @@
     { displayName: "ABDUL QADEER", username: "AIT-261-110-1098@ALIGARH.EDU.PK", newPassword: "abdul+1098", license: "Office 365 A1 for students", series: "110" },
     { displayName: "IYQAAN ABBAS KAZMI", username: "AIT-261-110-1099@ALIGARH.EDU.PK", newPassword: "abbas+1099", license: "Office 365 A1 for students", series: "110" },
     { displayName: "MUHAMMAD AHMED KHAN", username: "AIT-261-110-1100@ALIGARH.EDU.PK", newPassword: "ahmed+1100", license: "Office 365 A1 for students", series: "110" },
-    // ---- NEW DATA from users.csv (15).csv — 110 series ----
-    { displayName: "MUHAMMAD SUFIYAN", username: "AIT-261-110-1103@ALIGARH.EDU.PK", newPassword: "sufiyan+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "SHAIKH SHAYANN NOOR", username: "AIT-261-110-1104@ALIGARH.EDU.PK", newPassword: "shayann+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "ZOYAN AHMED KHAN", username: "AIT-261-110-1105@ALIGARH.EDU.PK", newPassword: "zoyan+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "MUHAMMAD AHSAN", username: "AIT-261-110-1106@ALIGARH.EDU.PK", newPassword: "ahsan+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "MUHAMMAD ABBAS", username: "AIT-261-110-1107@ALIGARH.EDU.PK", newPassword: "abbas+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "ABDUL HADI", username: "AIT-261-110-1108@ALIGARH.EDU.PK", newPassword: "hadi+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "AYYAN GUL", username: "AIT-261-110-1109@ALIGARH.EDU.PK", newPassword: "ayyan+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "MUHAMAMD HAMMAD SIDDIQUI", username: "AIT-261-110-1110@ALIGARH.EDU.PK", newPassword: "hammad+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "MUHAMMAD MUSTAFA KHAN", username: "AIT-261-110-1111@ALIGARH.EDU.PK", newPassword: "mustafa+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "MUHAMMAD FARZAN FAISAL", username: "AIT-261-110-1112@ALIGARH.EDU.PK", newPassword: "farzan+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "MUHAMMAD ZAEEM SIDDIQUI", username: "AIT-261-110-1113@ALIGARH.EDU.PK", newPassword: "zaeem+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "MUHAMMAD IQRASH", username: "AIT-261-110-1114@ALIGARH.EDU.PK", newPassword: "iqrash+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "SYED MURTAZA HAIDER", username: "AIT-261-110-1115@ALIGARH.EDU.PK", newPassword: "murtaza+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "SYED MUHAMMAD ABDULLAH", username: "AIT-261-110-1116@ALIGARH.EDU.PK", newPassword: "abdullah+123", license: "Office 365 A1 for students", series: "110" },
-    { displayName: "SYED MUHAMMAD AHMED NOOR", username: "AIT-261-110-1117@ALIGARH.EDU.PK", newPassword: "ahmed+123", license: "Office 365 A1 for students", series: "110" },
 
     // ---------- 209 SERIES (GR prefixed with D-) ----------
     { displayName: "JAHANGIR KORAI", username: "AIT-261-209-1001@ALIGARH.EDU.PK", newPassword: "jahangir+123", license: "Office 365 A1 for students", series: "209", grDisplay: "D-1001" },
@@ -429,10 +438,8 @@
   studentsData.forEach(student => {
     let key;
     if (student.series === "209") {
-      // Use the explicit grDisplay (e.g., "D-1001")
       key = student.grDisplay || ("D-" + extractNumericGR(student.username));
     } else {
-      // 110 series → plain numeric string
       key = extractNumericGR(student.username);
     }
     if (key) {
@@ -461,12 +468,10 @@
       return;
     }
 
-    // Normalize the input
     let searchKey;
     const upper = rawGr.toUpperCase();
 
     if (upper.startsWith("D-")) {
-      // 209 series: ensure format "D-XXXX"
       const numPart = rawGr.replace(/[^0-9]/g, "");
       if (numPart.length < 3) {
         resultDiv.style.display = "block";
@@ -475,7 +480,6 @@
       }
       searchKey = "D-" + numPart.padStart(4, "0").slice(-4);
     } else {
-      // 110 series: plain 4-digit
       const numMatch = rawGr.match(/\d{4}/);
       if (!numMatch) {
         resultDiv.style.display = "block";
@@ -531,7 +535,7 @@
     `;
   }
 
-  // ------- Show All Students Modal (sorted: 110 series first, then D- series) -------
+  // ------- Show All Students Modal -------
   showAllBtn.addEventListener("click", () => {
     const enriched = studentsData.map(s => {
       let grKey;
@@ -543,11 +547,10 @@
       return { ...s, grKey };
     });
 
-    // Sort: plain numbers (110 series) first by numeric, then D- series by numeric
     enriched.sort((a, b) => {
       const aIsD = a.grKey.startsWith("D-");
       const bIsD = b.grKey.startsWith("D-");
-      if (aIsD !== bIsD) return aIsD ? 1 : -1; // plain first
+      if (aIsD !== bIsD) return aIsD ? 1 : -1;
       const aNum = parseInt(a.grKey.replace(/\D/g, ""), 10) || 9999;
       const bNum = parseInt(b.grKey.replace(/\D/g, ""), 10) || 9999;
       return aNum - bNum;
@@ -562,7 +565,6 @@
     modal.classList.add("active");
   });
 
-  // Close modal
   modalCloseBtn.addEventListener("click", () => {
     modal.classList.remove("active");
   });
